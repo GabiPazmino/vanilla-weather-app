@@ -14,7 +14,65 @@
     <title>Weather app</title>
   </head>
   <body>
-    <h1>Weather app</h1>
+   <body>
+    <!-- borde externo -->
+    <div class="border border-2 rounded">
+      <!-- buscador -->
+      <form id="form">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter a city"
+            aria-label="Recipient's username with two button addons"
+            id="city-input"
+          />
+          <button class="btn btn-outline-secondary" id="submit" type="submit">
+            Search
+          </button>
+          <button class="btn btn-outline-secondary" id="current" type="button">
+            Current
+          </button>
+        </div>
+      </form>
+
+      <!-- contenido de la app -->
+      <!-- clima actual -->
+
+      <h1>Quito</h1>
+      <h6 id="fecha">Martes, 20:30</h6>
+
+      <div class="container text-center">
+        <div class="row" id="info-actual">
+          <div class="col-6">
+            <img id="img-weather" src="https://openweathermap.org/img/wn/10d@2x.png" alt="weatherIcon" />
+
+            <span id="temp-now"> 7</span>
+            <span id="units">
+              <a id="celsius" href="#"
+                ><img src="images/celsius.png" alt="celsius"
+              /></a>
+              |
+              <a id="fahrenheit" href="#"
+                ><img src="images/fahrenheit.png" alt="fahrenheit"
+              /></a>
+            </span>
+
+            <h4 id="tiempo">Rain</h4>
+          </div>
+
+          <!-- otros datos -->
+          <div class="col-4">
+            <h5 id="info-add">
+              <img src="images/humidity.png" alt="humedad" />:
+              <span id="humedad">96</span> % <br />
+              <img src="images/wind.png" alt="velocidadViento" />: a
+              <span id="velocidadViento">8</span> km/h
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="src/script.js"></script>
   </body>
