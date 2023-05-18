@@ -1,1 +1,68 @@
+/* foto de fondo */
 
+body {
+  background-image: url("images/cielo.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 10% 15%;
+  font-family: "Cormorant Upright", serif;
+}
+
+/* formulario, búsqueda de ciudad */
+form {
+  margin: 30px auto;
+  width: 70%;
+}
+input {
+  width: 70%;
+}
+
+/* botones */
+#submit,
+#current {
+  color: whitesmoke;
+}
+
+/* contenido actual */
+#info-actual {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+}
+
+h1 {
+  font-weight: bolder;
+  font-size: 50px;
+}
+#fecha {
+  font-size: 30px;
+}
+h1,
+#fecha {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+}
+
+#temp-now {
+  font-size: 100px;
+  position: relative;
+  top: 30px;
+  margin-left: 60px;
+}
+
+h4 {
+  position: relative;
+  right: 105px;
+}
+
+#info-add {
+  position: relative;
+  top: 50px;
+
+  text-align: left;
+}
