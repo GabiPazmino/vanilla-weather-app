@@ -11,9 +11,9 @@ let days = [
   "Saturday",
 ];
 
-today.innerHTML = `${days[now.getDay()]}, 
-  
-  ${now.getHours()}:${now.getMinutes()}`;
+today.textContent = `${
+  days[now.getDay()]
+}, ${now.getHours()}:${now.getMinutes()}`;
 
 //ACTUALIZAR H1 A CIUDAD INGRESADA//
 let cityElement = document.querySelector("h1");
@@ -79,6 +79,8 @@ function showTemperature(response) {
   let porcentajeHumedad = document.querySelector("#humedad");
   let actualViento = document.querySelector("#velocidadViento");
 
+  celsiusTemperature = response.data.main.temp;
+
   cityElement.innerHTML = response.data.name;
   actualTemp.innerHTML = temperature;
   actualTiempo.innerHTML = response.data.weather[0].description;
@@ -94,3 +96,32 @@ function getCurrentPosition(event) {
 let currentBoton = document.querySelector("#current");
 
 currentBoton.addEventListener("click", getCurrentPosition);
+
+// CHANGE TEMPERATURE UNITS TO FAHRENHEIT
+
+function displayFahrenheit(event) {
+  event.preventDefault();
+  let displayTemperature = document.querySelector("#temp-now");
+
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  displayTemperature.textContent = Math.round(fahrenheitTemperature);
+  fahrenheitLink.classList.add("selected");
+  celsiustLink.classList.remove("selected");
+}
+
+let celsiusTemperature = null;
+let fahrenheitLink = document.querySelector("#fahrenheit");
+fahrenheitLink.addEventListener("click", displayFahrenheit);
+
+// CHANGE TEMPERATURE UNITS TO CELSIUS
+function displayCelsius(event) {
+  event.preventDefault();
+  let displayTemperature = document.querySelector("#temp-now");
+
+  displayTemperature.textContent = Math.round(celsiusTemperature);
+  fahrenheitLink.classList.remove("selected");
+  celsiustLink.classList.add("selected");
+}
+
+let celsiustLink = document.querySelector("#celsius");
+celsiustLink.addEventListener("click", displayCelsius);
