@@ -77,3 +77,8 @@ h4 {
 .selected {
   font-weight: bolder;
 }
+
+a {
+  color: rgb(67, 23, 2);
+  text-decoration: none;
+}
