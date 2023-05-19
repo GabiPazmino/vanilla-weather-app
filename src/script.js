@@ -30,18 +30,19 @@ today.textContent = `${
 }, ${now.getHours()}:${now.getMinutes()}`;
 
 // MUESTRA PREDICCIÓN DE CLIMA DE LA SEMANA
-function displayForecast() {
+function displayForecast(response) {
+  // console.log(response.data.daily);
   let forecastContainer = document.querySelector("#info-adicional");
   let forecastHTML = `<div class="row" id="info-diaria1"> `;
 
   days.forEach(function (day) {
     forecastHTML =
       forecastHTML +
-      `  <div class="col-3 border border-2 rounded">
+      `  <div class="col-4 border border-2 rounded">
          <span>10</span> <img id="img-hot" src="images/hot.png" alt="tempHotIcon">
           <span>10</span> <img id="img-cold" src="images/cold.png" alt="tempColdIcon"> <br/>
           ${day}</div>
-                 
+              
   `;
   });
 
@@ -74,6 +75,15 @@ function enterCity(event) {
   axios.get(apiUrl).then(displayTemperatureInput);
 }
 
+// OBTENER DATOS PARA EL FORECAST
+function getForecast(coordinates) {
+  let apiKey = "a2dda52dce059eb8a14e95aaa0db6ab7";
+
+  let apiForecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+
+  axios.get(apiForecastUrl).then(displayForecast);
+}
+
 // MUESTRA LA TEMPERATURA ACTUAL
 function displayTemperatureInput(response) {
   let temperature = Math.round(response.data.main.temp);
@@ -86,6 +96,9 @@ function displayTemperatureInput(response) {
   actualTiempo.innerHTML = response.data.weather[0].description;
   porcentajeHumedad.innerHTML = response.data.main.humidity;
   actualViento.innerHTML = response.data.wind.speed;
+
+  // OBTENER COORDENADAS PARA EL FORECAST
+  getForecast(response.data.coords);
 }
 
 searchForm.addEventListener("submit", enterCity);
