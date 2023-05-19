@@ -82,3 +82,14 @@ a {
   color: rgb(67, 23, 2);
   text-decoration: none;
 }
+
+/* información de clima en la semana */
+#info-diaria1,
+#info-diaria2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  margin: 20px;
+}
