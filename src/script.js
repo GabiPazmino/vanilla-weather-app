@@ -1,4 +1,5 @@
-//ACTUALIZAZAR HORA Y FECHA ACTUAL//
+// DECLARACIÓN DE VARIABLES GLOBALES
+// HORA Y FECHA ACTUAL//
 let today = document.querySelector("#fecha");
 let now = new Date();
 let days = [
@@ -10,15 +11,45 @@ let days = [
   "Fryday",
   "Saturday",
 ];
+//INPUT CIUDAD INGRESADA//
+let cityElement = document.querySelector("h1");
+// FORMULARIO
+let searchForm = document.querySelector("#form");
+// BOTÓN POSICIÓN ACTUAL
+let currentBoton = document.querySelector("#current");
+// TRAE LA INFO DINÁMICA DE TEMPERATURA DE LA VARIABLE LOCAL PARA SER UTILIZADA GLOBALMENTE
+let celsiusTemperature = null;
+// GRADOS FAHRENHEIT
+let fahrenheitLink = document.querySelector("#fahrenheit");
+// GRADOS CELSIUS
+let celsiustLink = document.querySelector("#celsius");
 
+//ACTUALIZAR HORA Y FECHA ACTUAL//
 today.textContent = `${
   days[now.getDay()]
 }, ${now.getHours()}:${now.getMinutes()}`;
 
-//ACTUALIZAR H1 A CIUDAD INGRESADA//
-let cityElement = document.querySelector("h1");
-let searchForm = document.querySelector("#form");
+// MUESTRA PREDICCIÓN DE CLIMA DE LA SEMANA
+function displayForecast() {
+  let forecastContainer = document.querySelector("#info-adicional");
+  let forecastHTML = `<div class="row" id="info-diaria1"> `;
 
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `  <div class="col-3 border border-2 rounded">
+         <span>10</span> <img id="img-hot" src="images/hot.png" alt="tempHotIcon">
+          <span>10</span> <img id="img-cold" src="images/cold.png" alt="tempColdIcon"> <br/>
+          ${day}</div>
+                 
+  `;
+  });
+
+  forecastHTML = forecastHTML + `</div>`;
+  forecastContainer.innerHTML = forecastHTML;
+}
+
+//ACTUALIZAR H1 A CIUDAD INGRESADA//
 function search(event) {
   event.preventDefault();
   let cityInput = document.querySelector("#city-input");
@@ -43,6 +74,7 @@ function enterCity(event) {
   axios.get(apiUrl).then(displayTemperatureInput);
 }
 
+// MUESTRA LA TEMPERATURA ACTUAL
 function displayTemperatureInput(response) {
   let temperature = Math.round(response.data.main.temp);
   let actualTemp = document.querySelector("#temp-now");
@@ -72,6 +104,7 @@ function showPosition(position) {
   axios.get(apiUrl).then(showTemperature);
 }
 
+// MUESTRA INFORMACIÓN ACTUAL DE VARIABLES DE CLIMA
 function showTemperature(response) {
   let temperature = Math.round(response.data.main.temp);
   let actualTemp = document.querySelector("#temp-now");
@@ -88,17 +121,15 @@ function showTemperature(response) {
   actualViento.innerHTML = response.data.wind.speed;
 }
 
+// PERMITIR USAR LOCALIZACIÓN ACTUAL
 function getCurrentPosition(event) {
   event.preventDefault();
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
-let currentBoton = document.querySelector("#current");
-
 currentBoton.addEventListener("click", getCurrentPosition);
 
 // CHANGE TEMPERATURE UNITS TO FAHRENHEIT
-
 function displayFahrenheit(event) {
   event.preventDefault();
   let displayTemperature = document.querySelector("#temp-now");
@@ -109,8 +140,6 @@ function displayFahrenheit(event) {
   celsiustLink.classList.remove("selected");
 }
 
-let celsiusTemperature = null;
-let fahrenheitLink = document.querySelector("#fahrenheit");
 fahrenheitLink.addEventListener("click", displayFahrenheit);
 
 // CHANGE TEMPERATURE UNITS TO CELSIUS
@@ -123,5 +152,6 @@ function displayCelsius(event) {
   celsiustLink.classList.add("selected");
 }
 
-let celsiustLink = document.querySelector("#celsius");
 celsiustLink.addEventListener("click", displayCelsius);
+
+displayForecast();
