@@ -7,8 +7,8 @@ let days = [
   "Monday",
   "Tuesday",
   "Wednesday",
-  "Thuersday",
-  "Fryday",
+  "Thursday",
+  "Friday",
   "Saturday",
 ];
 //INPUT CIUDAD INGRESADA//
@@ -29,21 +29,43 @@ today.textContent = `${
   days[now.getDay()]
 }, ${now.getHours()}:${now.getMinutes()}`;
 
+// TRANSFORMAR DT A NOMBRE DE DÍAS
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  return days[day];
+}
+
 // MUESTRA PREDICCIÓN DE CLIMA DE LA SEMANA
 function displayForecast(response) {
-  // console.log(response.data.daily);
+  let forecast = response.data.daily;
   let forecastContainer = document.querySelector("#info-adicional");
   let forecastHTML = `<div class="row" id="info-diaria1"> `;
 
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `  <div class="col-4 border border-2 rounded">
-         <span>10</span> <img id="img-hot" src="images/hot.png" alt="tempHotIcon">
-          <span>10</span> <img id="img-cold" src="images/cold.png" alt="tempColdIcon"> <br/>
-          ${day}</div>
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `  <div class="col-4 border border-2 rounded">
+         <span>${Math.round(
+           forecastDay.temp.max
+         )}°</span> <img id="img-hot" src="images/hot.png" alt="tempHotIcon">
+          <span>${Math.round(
+            forecastDay.temp.min
+          )}°</span> <img id="img-cold" src="images/cold.png" alt="tempColdIcon"> <br/>
+          ${formatDay(forecastDay.dt)}</div>
               
   `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -98,7 +120,7 @@ function displayTemperatureInput(response) {
   actualViento.innerHTML = response.data.wind.speed;
 
   // OBTENER COORDENADAS PARA EL FORECAST
-  getForecast(response.data.coords);
+  getForecast(response.data.coord);
 }
 
 searchForm.addEventListener("submit", enterCity);
@@ -166,5 +188,3 @@ function displayCelsius(event) {
 }
 
 celsiustLink.addEventListener("click", displayCelsius);
-
-displayForecast();
