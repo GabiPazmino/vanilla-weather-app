@@ -155,11 +155,3 @@ function showTemperature(response) {
   porcentajeHumedad.innerHTML = response.data.main.humidity;
   actualViento.innerHTML = response.data.wind.speed;
 }
-
-// PERMITIR USAR LOCALIZACIÓN ACTUAL
-function getCurrentPosition(event) {
-  event.preventDefault();
-  navigator.geolocation.getCurrentPosition(showPosition);
-}
-
-currentBoton.addEventListener("click", getCurrentPosition);
