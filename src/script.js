@@ -55,7 +55,7 @@ function displayForecast(response) {
     if (index < 6) {
       forecastHTML =
         forecastHTML +
-        `  <div class="col-4 border border-2 rounded">
+        `  <div class="col-3 border border-2 rounded forecastInfo">
          <span>${Math.round(
            forecastDay.temp.max
          )}°</span> <img id="img-hot" src="images/hot.png" alt="tempHotIcon">
@@ -163,28 +163,3 @@ function getCurrentPosition(event) {
 }
 
 currentBoton.addEventListener("click", getCurrentPosition);
-
-// CHANGE TEMPERATURE UNITS TO FAHRENHEIT
-function displayFahrenheit(event) {
-  event.preventDefault();
-  let displayTemperature = document.querySelector("#temp-now");
-
-  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
-  displayTemperature.textContent = Math.round(fahrenheitTemperature);
-  fahrenheitLink.classList.add("selected");
-  celsiustLink.classList.remove("selected");
-}
-
-fahrenheitLink.addEventListener("click", displayFahrenheit);
-
-// CHANGE TEMPERATURE UNITS TO CELSIUS
-function displayCelsius(event) {
-  event.preventDefault();
-  let displayTemperature = document.querySelector("#temp-now");
-
-  displayTemperature.textContent = Math.round(celsiusTemperature);
-  fahrenheitLink.classList.remove("selected");
-  celsiustLink.classList.add("selected");
-}
-
-celsiustLink.addEventListener("click", displayCelsius);

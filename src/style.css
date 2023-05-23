@@ -84,12 +84,16 @@ a {
 }
 
 /* información de clima en la semana */
-#info-diaria1,
-#info-diaria2 {
+#info-diaria1 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
 
   margin: 20px;
+}
+
+.forecastInfo {
+  padding: 0 10px;
+  margin: 5px;
 }
