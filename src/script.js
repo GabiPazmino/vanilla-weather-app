@@ -15,14 +15,6 @@ let days = [
 let cityElement = document.querySelector("h1");
 // FORMULARIO
 let searchForm = document.querySelector("#form");
-// BOTÓN POSICIÓN ACTUAL
-let currentBoton = document.querySelector("#current");
-// TRAE LA INFO DINÁMICA DE TEMPERATURA DE LA VARIABLE LOCAL PARA SER UTILIZADA GLOBALMENTE
-let celsiusTemperature = null;
-// GRADOS FAHRENHEIT
-let fahrenheitLink = document.querySelector("#fahrenheit");
-// GRADOS CELSIUS
-let celsiustLink = document.querySelector("#celsius");
 
 //ACTUALIZAR HORA Y FECHA ACTUAL//
 today.textContent = `${
@@ -76,23 +68,21 @@ function displayForecast(response) {
 function search(event) {
   event.preventDefault();
   let cityInput = document.querySelector("#city-input");
-  cityElement.innerHTML = cityInput.value;
+
+  searchCity(cityInput.value);
+  cityInput.value = " ";
 }
 
 searchForm.addEventListener("submit", search);
 
 // It should display the name of the city on the result page and the current temperature of the city.
 
-function enterCity(event) {
-  event.preventDefault();
-  let cityInput = document.querySelector("#city-input");
+function searchCity(city) {
   let units = "metric";
   let apiKey = "a2dda52dce059eb8a14e95aaa0db6ab7";
   let apiBegin = "https://api.openweathermap.org/data/2.5/weather?q";
 
-  let apiUrl = `${apiBegin}=${cityInput.value}&units=${units}&appid=${apiKey}`;
-
-  cityInput.value = " ";
+  let apiUrl = `${apiBegin}=${city}&units=${units}&appid=${apiKey}`;
 
   axios.get(apiUrl).then(displayTemperatureInput);
 }
@@ -108,12 +98,14 @@ function getForecast(coordinates) {
 
 // MUESTRA LA TEMPERATURA ACTUAL
 function displayTemperatureInput(response) {
+  let city = document.querySelector("h1");
   let temperature = Math.round(response.data.main.temp);
   let actualTemp = document.querySelector("#temp-now");
   let actualTiempo = document.querySelector("#tiempo");
   let porcentajeHumedad = document.querySelector("#humedad");
   let actualViento = document.querySelector("#velocidadViento");
 
+  city.innerHTML = response.data.name;
   actualTemp.innerHTML = temperature;
   actualTiempo.innerHTML = response.data.weather[0].description;
   porcentajeHumedad.innerHTML = response.data.main.humidity;
@@ -122,8 +114,6 @@ function displayTemperatureInput(response) {
   // OBTENER COORDENADAS PARA EL FORECAST
   getForecast(response.data.coord);
 }
-
-searchForm.addEventListener("submit", enterCity);
 
 // Add a Current Location button. When clicking on it, it uses the Geolocation API to get your GPS coordinates and display and the city and current temperature using the OpenWeather API.
 
@@ -155,3 +145,5 @@ function showTemperature(response) {
   porcentajeHumedad.innerHTML = response.data.main.humidity;
   actualViento.innerHTML = response.data.wind.speed;
 }
+
+searchCity("Quito");

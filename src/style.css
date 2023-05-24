@@ -20,8 +20,7 @@ input {
 }
 
 /* botones */
-#submit,
-#current {
+#submit {
   color: whitesmoke;
 }
 
@@ -65,13 +64,6 @@ h4 {
   top: 50px;
 
   text-align: left;
-}
-
-#celsius,
-#fahrenheit {
-  color: black;
-  text-decoration: none;
-  cursor: default;
 }
 
 .selected {
